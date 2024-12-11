@@ -36,12 +36,18 @@ pipeline {
                    git commit -m "Updated Deployment Manifest"
                    git push origin main
                 """
-                withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
-                 // sh "git push https://github.com/engineergitpro/gitops-register-app main"
-                    sh "kubectl apply -f deployment.yaml"
-                }
+                // withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
+                //  // sh "git push https://github.com/engineergitpro/gitops-register-app main"
+                //   //  sh "kubectl apply -f deployment.yaml"
+                // }
             }
         }
+        stage("deploy"){
+            steps{
+                sh  "kubectl apply -f deployment.yaml"'
+            }
+        }
+        
       
     }
 }
