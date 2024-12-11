@@ -34,9 +34,11 @@ pipeline {
                    git config --global user.email "supriyajer94@gmail.com"
                    git add deployment.yaml
                    git commit -m "Updated Deployment Manifest"
+                   git push origin main
                 """
                 withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
-                  sh "git push https://github.com/engineergitpro/gitops-register-app main"
+                 // sh "git push https://github.com/engineergitpro/gitops-register-app main"
+                    sh "kubectl apply -f deployment.yaml"
                 }
             }
         }
