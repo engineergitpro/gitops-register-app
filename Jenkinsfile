@@ -44,16 +44,21 @@ pipeline {
         // }
 
         stage('Update Deployment File') {
+            environment {
+            GIT_REPO_NAME = "gitops-register-app"
+            GIT_USER_NAME = "engineergitpro"
+        }
         steps {
             withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
                 sh '''
-                    git config --global user.name "engineergitpro"
-                    git config --global user.email "supriyajer94@gmail.com"
+                    git config user.email "supriyajer94@gmail.com"
+                    git config user.name "Supriya Jadhav"
+                    git config --global user.email "gitops-register-app"
                     BUILD_NUMBER=${BUILD_NUMBER}
                     sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yaml
                     git add deployment.yml
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                    git push https://github.com/engineergitpro/gitops-register-app main
+                    git push https://${github}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                 '''
             }
         }
