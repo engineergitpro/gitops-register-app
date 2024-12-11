@@ -56,7 +56,7 @@ pipeline {
                     git config --global user.email "gitops-register-app"
                     BUILD_NUMBER=${BUILD_NUMBER}
                     sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" gitops-register-app/deployment.yml
-                    git add deployment.yml
+                    git add gitops-register-app/deployment.yml
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${github}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                 '''
